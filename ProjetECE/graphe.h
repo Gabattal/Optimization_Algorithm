@@ -3,30 +3,38 @@
 #include "sommet.h"
 #include <vector>
 
+struct Vertex
+{
+    float x;
+    float y;
+};
+
+struct Edge
+{
+    int vertex1;
+    int vertex2;
+    std::vector<float> weights;
+
+    bool checkIfVertex(int vertex) const
+    {
+        return ((vertex == vertex1) || (vertex == vertex2));
+    }
+};
+
 class graphe
 {
     public:
         graphe(std::string,std::string);
         void afficher_graph();
+        void Prim(int startId, int weightNum);
         //graphe_weight(std::string);
         virtual ~graphe();
 
     protected:
 
     private:
-        float m_taille, m_taille2,m_taille3, m_cursor, m_cursor2;
-        std::vector<float> tabID;
-        std::vector<float> tabX;
-        std::vector<float> tabY;
-
-        std::vector<float> tabSID;
-        std::vector<float> tabS1;
-        std::vector<float> tabS2;
-
-        std::vector<float> tabArete;
-        std::vector<float> tabWeight1;
-        std::vector<float> tabWeight2;
-
+        std::vector<Vertex> vertices;
+        std::vector<Edge> edges;
 };
 
 #endif // GRAPHE_H

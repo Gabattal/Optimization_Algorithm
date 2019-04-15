@@ -6,18 +6,19 @@
 1555340811 d:\program files\piscine\projetece\sommet.h
 	<iostream>
 
-1555353118 source:d:\program files\piscine\projetece\main.cpp
+1555372210 source:d:\program files\piscine\projetece\main.cpp
 	<iostream>
 	"graphe.h"
 	<vector>
 
-1555352654 d:\program files\piscine\projetece\graphe.h
+1555372360 d:\program files\piscine\projetece\graphe.h
 	"sommet.h"
 	<vector>
 
-1555353218 source:d:\program files\piscine\projetece\graphe.cpp
+1555372069 source:d:\program files\piscine\projetece\graphe.cpp
 	"graphe.h"
 	<iostream>
 	<fstream>
 	<vector>
+	<algorithm>
 
