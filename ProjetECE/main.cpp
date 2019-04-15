@@ -1,10 +1,10 @@
 #include <iostream>
 #include "graphe.h"
+#include <vector>
 
 int main()
 {
    graphe g{"broadway.txt"};
-   //coucou
-   //cv
+    //std::cout<<tableau[0];
     return 0;
 }

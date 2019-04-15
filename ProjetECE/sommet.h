@@ -5,8 +5,8 @@
 class sommet
 {
     public:
-        sommet(std::string,double,double);
-        std::string getId();
+        sommet(double,double,double);
+        double getId();
         double getX();
         double getY();
         virtual ~sommet();
@@ -15,8 +15,8 @@ class sommet
     protected:
 
     private:
-        std::string m_id; // Identifiant
-        double m_x, m_y; // Position
+ // Identifiant
+        double m_x, m_y, m_id; // Position
 };
 
 #endif // SOMMET_H
