@@ -6,14 +6,15 @@
 class graphe
 {
     public:
-        graphe(std::string);
-        graphe_weight(std::string);
+        graphe(std::string,std::string);
+        void afficher_graph();
+        //graphe_weight(std::string);
         virtual ~graphe();
 
     protected:
 
     private:
-        float m_taille, m_taille2, m_cursor;
+        float m_taille, m_taille2,m_taille3, m_cursor, m_cursor2;
         std::vector<float> tabID;
         std::vector<float> tabX;
         std::vector<float> tabY;
@@ -23,8 +24,8 @@ class graphe
         std::vector<float> tabS2;
 
         std::vector<float> tabArete;
-        std::vector<float> tabPoids1;
-        std::vector<float> tabPoids2;
+        std::vector<float> tabWeight1;
+        std::vector<float> tabWeight2;
 
 };
 
