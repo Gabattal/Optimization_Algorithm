@@ -6,17 +6,17 @@
 
 graphe::graphe(std::string nomFichier){
 
-    int taille;
-    int taille2;
-    int cursor;
+    float taille;
+    float taille2;
+    float cursor;
     std::ifstream file{nomFichier};
     file>>taille;
 
     //std::cout<<taille;
 
-    std::vector<int> tabID(taille);
-    std::vector<int> tabX(taille);
-    std::vector<int> tabY(taille);
+    std::vector<float> tabID(taille);
+    std::vector<float> tabX(taille);
+    std::vector<float> tabY(taille);
 
 
     for(int i=0;i<taille;i++)
@@ -33,9 +33,9 @@ graphe::graphe(std::string nomFichier){
 
     file>>taille2;
 
-    std::vector<int> tabSID(taille2);
-    std::vector<int> tabS1(taille2);
-    std::vector<int> tabS2(taille2);
+    std::vector<float> tabSID(taille2);
+    std::vector<float> tabS1(taille2);
+    std::vector<float> tabS2(taille2);
 
     for(int i=0;i<taille2;i++)
     {
@@ -49,6 +49,39 @@ graphe::graphe(std::string nomFichier){
         tabS2[i]=cursor;
     }
     //ctor
+}
+graphe::graphe_weight(std::string nomFichier1,std::string nomFichier2){
+
+    graphe g(nomFichier1);
+    float taille;
+    float cursor;
+    std::ifstream file{nomFichier2};
+    file>>taille;
+
+
+
+    std::vector<float> tabARRETE(taille);
+    std::vector<float> tabPoids1(taille);
+    std::vector<float> tabPoids2(taille);
+
+
+
+    for(int i=0;i<taille;i++)
+    {
+        file>>cursor;
+        tabARRETE[i]=cursor;
+
+        file>>cursor;
+        tabPoids1[i]=cursor;
+
+        file>>cursor;
+        tabPoids2[i]=cursor;
+
+
+    }
+
+
+
 }
 
 graphe::~graphe()

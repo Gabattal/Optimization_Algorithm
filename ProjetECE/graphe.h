@@ -7,6 +7,7 @@ class graphe
 {
     public:
         graphe(std::string);
+        graphe_weight(std::string,std::string);
         virtual ~graphe();
 
     protected:
