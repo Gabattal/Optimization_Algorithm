@@ -7,7 +7,7 @@ class graphe
 {
     public:
         graphe(std::string);
-        graphe_weight(std::string,std::string);
+        graphe_weight(std::string);
         virtual ~graphe();
 
     protected:
@@ -22,7 +22,7 @@ class graphe
         std::vector<float> tabS1;
         std::vector<float> tabS2;
 
-        std::vector<float> tabARRETE;
+        std::vector<float> tabArete;
         std::vector<float> tabPoids1;
         std::vector<float> tabPoids2;
 
