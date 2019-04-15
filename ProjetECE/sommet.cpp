@@ -1,12 +1,12 @@
 #include "sommet.h"
 #include <iostream>
 
-sommet::sommet(std::string,double,double)
+sommet::sommet(double,double,double)
 {
     //ctor
 }
 
-std::string sommet::getId(){
+double sommet::getId(){
     return m_id;
 }
 
