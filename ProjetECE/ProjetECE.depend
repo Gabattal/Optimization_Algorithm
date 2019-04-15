@@ -1,0 +1,15 @@
+# depslib dependency file v1.0
+1555333784 source:d:\program files\piscine\projetece\sommet.cpp
+	"sommet.h"
+	<iostream>
+
+1555333784 d:\program files\piscine\projetece\sommet.h
+	<iostream>
+
+1555333988 source:d:\program files\piscine\projetece\main.cpp
+	<iostream>
+	"graphe.h"
+
+1555333918 d:\program files\piscine\projetece\graphe.h
+	"sommet.h"
+
