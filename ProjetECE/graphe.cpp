@@ -6,76 +6,56 @@
 
 graphe::graphe(std::string nomFichier){
 
-    float taille;
-    float taille2;
-    float cursor;
+
     std::ifstream file{nomFichier};
-    file>>taille;
+    file>>m_taille;
 
     //std::cout<<taille;
 
-    std::vector<float> tabID(taille);
-    std::vector<float> tabX(taille);
-    std::vector<float> tabY(taille);
-
-
-    for(int i=0;i<taille;i++)
+    for(int i=0;i<m_taille;i++)
     {
-        file>>cursor;
-        tabID[i]=cursor;
+        file>>m_cursor;
+        tabID.push_back(m_cursor);
 
-        file>>cursor;
-        tabX[i]=cursor;
+        file>>m_cursor;
+        tabX.push_back(m_cursor);
 
-        file>>cursor;
-        tabY[i]=cursor;
+        file>>m_cursor;
+        tabY.push_back(m_cursor);
     }
 
-    file>>taille2;
+    file>>m_taille2;
 
-    std::vector<float> tabSID(taille2);
-    std::vector<float> tabS1(taille2);
-    std::vector<float> tabS2(taille2);
-
-    for(int i=0;i<taille2;i++)
+    for(int i=0;i<m_taille2;i++)
     {
-        file>>cursor;
-        tabSID[i]=cursor;
+        file>>m_cursor;
+        tabSID.push_back(m_cursor);
 
-        file>>cursor;
-        tabS1[i]=cursor;
+        file>>m_cursor;
+        tabS1.push_back(m_cursor);
 
-        file>>cursor;
-        tabS2[i]=cursor;
+        file>>m_cursor;
+        tabS2.push_back(m_cursor);
     }
+    std::cout<<tabS1[1];
     //ctor
 }
 graphe::graphe_weight(std::string nomFichier1,std::string nomFichier2){
 
     graphe g(nomFichier1);
-    float taille;
-    float cursor;
     std::ifstream file{nomFichier2};
-    file>>taille;
+    file>>m_taille;
 
-
-
-    std::vector<float> tabARRETE(taille);
-    std::vector<float> tabPoids1(taille);
-    std::vector<float> tabPoids2(taille);
-
-
-
-    for(int i=0;i<taille;i++)
+    for(int i=0;i<m_taille;i++)
     {
-        file>>cursor;
-        tabARRETE[i]=cursor;
+        file>>m_cursor;
+        tabARRETE.push_back(m_cursor);
 
-        file>>cursor;
-        tabPoids1[i]=cursor;
+        file>>m_cursor;
+        tabPoids1.push_back(m_cursor);
 
-        file>>cursor;
-        tabPoids2[i]=cursor;
+        file>>m_cursor;
+        tabPoids2.push_back(m_cursor);
 
 
     }
