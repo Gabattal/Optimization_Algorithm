@@ -52,7 +52,7 @@ graphe::graphe(std::string nomFichier){
 }
 graphe::graphe_weight(std::string nomFichier1,std::string nomFichier2){
 
-    graphe(nomFichier1);
+    graphe g(nomFichier1);
     float taille;
     float cursor;
     std::ifstream file{nomFichier2};
