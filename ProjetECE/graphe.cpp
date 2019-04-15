@@ -6,49 +6,57 @@
 
 graphe::graphe(std::string nomFichier){
 
-    int taille;
-    int taille2;
-    int cursor;
+
     std::ifstream file{nomFichier};
-    file>>taille;
+    file>>m_taille;
 
     //std::cout<<taille;
 
-    std::vector<int> tabID(taille);
-    std::vector<int> tabX(taille);
-    std::vector<int> tabY(taille);
-
-
-    for(int i=0;i<taille;i++)
+    for(int i=0;i<m_taille;i++)
     {
-        file>>cursor;
-        tabID[i]=cursor;
+        file>>m_cursor;
+        tabID.push_back(m_cursor);
 
-        file>>cursor;
-        tabX[i]=cursor;
+        file>>m_cursor;
+        tabX.push_back(m_cursor);
 
-        file>>cursor;
-        tabY[i]=cursor;
+        file>>m_cursor;
+        tabY.push_back(m_cursor);
     }
 
-    file>>taille2;
+    file>>m_taille2;
 
-    std::vector<int> tabSID(taille2);
-    std::vector<int> tabS1(taille2);
-    std::vector<int> tabS2(taille2);
-
-    for(int i=0;i<taille2;i++)
+    for(int i=0;i<m_taille2;i++)
     {
-        file>>cursor;
-        tabSID[i]=cursor;
+        file>>m_cursor;
+        tabSID.push_back(m_cursor);
 
-        file>>cursor;
-        tabS1[i]=cursor;
+        file>>m_cursor;
+        tabS1.push_back(m_cursor);
 
-        file>>cursor;
-        tabS2[i]=cursor;
+        file>>m_cursor;
+        tabS2.push_back(m_cursor);
     }
+    std::cout<<tabS1[1];
     //ctor
+}
+graphe::graphe_weight(std::string nomFichier){
+
+    std::ifstream file{nomFichier};
+    file>>m_taille;
+
+    for(int i=0;i<m_taille;i++)
+    {
+        file>>m_cursor;
+        tabArete.push_back(m_cursor);
+
+        file>>m_cursor;
+        tabPoids1.push_back(m_cursor);
+
+        file>>m_cursor;
+        tabPoids2.push_back(m_cursor);
+
+    }
 }
 
 graphe::~graphe()
