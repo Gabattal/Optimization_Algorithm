@@ -4,10 +4,10 @@
 #include <vector>
 #include <algorithm>
 
-
-
-graphe::graphe(std::string nomFichier, std::string nomFichier2)
+graphe::graphe(std::string nomFichier, std::string nomFichier2, Svgfile *svgout)
 {
+    this->svgout = svgout;
+
     std::ifstream file{nomFichier};
     int verticesNum, edgesNum;
     file>>verticesNum;
@@ -126,9 +126,28 @@ void graphe::Prim(int startId, int weightNum)
         std::cout<<OthersEdges[j]<<" ";
     }
     std::cout<<std::endl;
+}
+
+void graphe::Pareto()
+{
 
 }
 
+void graphe::generateSvg()
+{
+
+    for(int i=0; i<edges.size();i++)
+    {
+        svgout->addLine(vertices[edges[i].vertex1].x,vertices[edges[i].vertex1].y,
+                        vertices[edges[i].vertex2].x,vertices[edges[i].vertex2].y,Couleur{0,0,0});
+    }
+    for(int i=0; i<vertices.size() ;i++)
+    {
+        svgout->addDisk(vertices[i].x, vertices[i].y, 10, Couleur{0,0,0});
+    }
+
+
+}
 
 graphe::~graphe()
 {

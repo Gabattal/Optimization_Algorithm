@@ -6,19 +6,49 @@
 1555340811 d:\program files\piscine\projetece\sommet.h
 	<iostream>
 
-1555372210 source:d:\program files\piscine\projetece\main.cpp
+1555443475 source:d:\program files\piscine\projetece\main.cpp
 	<iostream>
 	"graphe.h"
 	<vector>
+	"svgfile.h"
+	"couleur.h"
 
-1555411684 d:\program files\piscine\projetece\graphe.h
+1555443475 d:\program files\piscine\projetece\graphe.h
 	"sommet.h"
+	"couleur.h"
+	"svgfile.h"
+	"pos.h"
 	<vector>
 
-1555411291 source:d:\program files\piscine\projetece\graphe.cpp
+1555444576 source:d:\program files\piscine\projetece\graphe.cpp
 	"graphe.h"
 	<iostream>
 	<fstream>
 	<vector>
 	<algorithm>
+
+1543430658 d:\program files\piscine\projetece\couleur.h
+	<string>
+	<cstdint>
+
+1555446354 d:\program files\piscine\projetece\svgfile.h
+	<string>
+	<fstream>
+	<set>
+	<vector>
+	"pos.h"
+
+1555446354 d:\program files\piscine\projetece\pos.h
+
+1543573772 source:d:\program files\piscine\projetece\pos.cpp
+
+1555444167 source:d:\program files\piscine\projetece\svgfile.cpp
+	"svgfile.h"
+	<iostream>
+	<sstream>
+
+1555434414 source:d:\program files\piscine\projetece\couleur.cpp
+	"couleur.h"
+	"svgfile.h"
+	<iostream>
 

@@ -1,7 +1,11 @@
 #ifndef GRAPHE_H
 #define GRAPHE_H
 #include "sommet.h"
+#include "couleur.h"
+#include "svgfile.h"
+#include "pos.h"
 #include <vector>
+
 
 struct Vertex
 {
@@ -24,15 +28,19 @@ struct Edge
 class graphe
 {
     public:
-        graphe(std::string,std::string);
+        graphe(std::string,std::string, Svgfile *svgout);
         void afficher_graph();
         void Prim(int startId, int weightNum);
+        void Pareto();
+        void generateSvg();
         //graphe_weight(std::string);
         virtual ~graphe();
 
     protected:
 
     private:
+        Pos unitD;
+        Svgfile *svgout;
         int weightsNum;
         std::vector<Vertex> vertices;
         std::vector<Edge> edges;
