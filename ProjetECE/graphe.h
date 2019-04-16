@@ -33,6 +33,7 @@ class graphe
     protected:
 
     private:
+        int weightsNum;
         std::vector<Vertex> vertices;
         std::vector<Edge> edges;
 };

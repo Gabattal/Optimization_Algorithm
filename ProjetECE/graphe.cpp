@@ -9,7 +9,7 @@
 graphe::graphe(std::string nomFichier, std::string nomFichier2)
 {
     std::ifstream file{nomFichier};
-    int verticesNum, edgesNum, weightsNum;
+    int verticesNum, edgesNum;
     file>>verticesNum;
 
     int vertexId, edgeId;
@@ -76,10 +76,13 @@ void graphe::Prim(int startId, int weightNum)
 {
     std::vector<bool> visitedVertices(vertices.size(), false);
     std::vector<int> edgesToCheck;
+    std::vector<float> OthersEdges(weightsNum,0);
 
     int visitedCount = 0;
-
     int cursor = startId;
+    float shortest = 0;
+
+    std::cout<<"Shortest way only by using Edge number "<<weightNum+1<<std::endl;
 
     while (visitedCount < vertices.size())
     {
@@ -106,9 +109,24 @@ void graphe::Prim(int startId, int weightNum)
         {
             return this->edges[edge1].weights[weightNum] < this->edges[edge2].weights[weightNum];
         });
-
         cursor = visitedVertices[edges[edgesToCheck[0]].vertex1] ? edges[edgesToCheck[0]].vertex2 : edges[edgesToCheck[0]].vertex1;
+        //std::cout<<edges[edgesToCheck[0]].weights[weightNum];
+
+        if(visitedCount!=vertices.size()-1)
+        {
+            for(int j=0; j<weightsNum; j++)
+            {
+                    OthersEdges[j]+=edges[edgesToCheck[0]].weights[j];
+            }
+        }
     }
+
+    for(int j=0; j<weightsNum; j++)
+    {
+        std::cout<<OthersEdges[j]<<" ";
+    }
+    std::cout<<std::endl;
+
 }
 
 
