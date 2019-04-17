@@ -29,7 +29,7 @@ class graphe
         graphe(std::string,std::string, Svgfile *svgout);
         void afficher_graph();
         void Prim(int startId, int weightNum);
-        void Pareto();
+        void Pareto(std::string,std::string, Svgfile *svgout);
         void generateSvg();
         //graphe_weight(std::string);
         virtual ~graphe();
@@ -42,6 +42,7 @@ class graphe
         int weightsNum;
         std::vector<Vertex> vertices;
         std::vector<Edge> edges;
+        int a;
 };
 
 #endif // GRAPHE_H
