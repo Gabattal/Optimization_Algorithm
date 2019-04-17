@@ -69,8 +69,17 @@ void Svgfile::addDisk(double x, double y, double r, std::string color)
             << "/>\n";
 }
 
+void Svgfile::addText(double x, double y, double number, std::string color)
+{
+    /// <text x="180" y="60">Un texte</text>
+    m_ostrm << "<text "
+            << attrib("x", x)
+            << attrib("y", y)
+            << attrib("fill", color)
+            << ">" << number << "</text>\n";
+}
 
-/// <polygon points="200,10 250,190 160,210" style="fill:lime;stroke:purple;stroke-width:1" />
+
 
 
 void Svgfile::addLine(double x1, double y1, double x2, double y2, std::string color)

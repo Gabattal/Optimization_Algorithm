@@ -48,7 +48,39 @@ graphe::graphe(std::string nomFichier, std::string nomFichier2, Svgfile *svgout)
 
 void graphe::afficher_graph()
 {
-    std::cout<<"Liste des sommets :\n"<<std::endl;
+    for(int i=0; i<edges.size(); i++) //svg
+    {
+        svgout->addLine(vertices[edges[i].vertex1].x,vertices[edges[i].vertex1].y,
+                        vertices[edges[i].vertex2].x,vertices[edges[i].vertex2].y,Couleur{255,0,0});
+        if(vertices[edges[i].vertex1].x==vertices[edges[i].vertex2].x)
+        {
+            svgout->addText(vertices[edges[i].vertex1].x-10,(vertices[edges[i].vertex1].y+vertices[edges[i].vertex2].y)/2,edges[i].weights[0],Couleur{0,0,255});
+        }
+        else if(vertices[edges[i].vertex1].y==vertices[edges[i].vertex2].y)
+        {
+            svgout->addText((vertices[edges[i].vertex1].x+vertices[edges[i].vertex2].x)/2,vertices[edges[i].vertex1].y-2,edges[i].weights[0],Couleur{0,0,255});
+        }
+        else
+        {
+            svgout->addText((vertices[edges[i].vertex1].x+vertices[edges[i].vertex2].x)/2-4,
+                            (vertices[edges[i].vertex1].y+vertices[edges[i].vertex2].y)/2,edges[i].weights[0],Couleur{0,0,255});
+        }
+    }
+    for(int i=0; i<vertices.size() ; i++)
+    {
+        svgout->addDisk(vertices[i].x, vertices[i].y, 10, Couleur{0,0,0});
+
+        if(i<10)
+        {
+            svgout->addText(vertices[i].x-5, vertices[i].y+5,i, Couleur{255,255,255});
+        }
+        else
+        {
+            svgout->addText(vertices[i].x-8, vertices[i].y+5,i, Couleur{255,255,255});
+        }
+    }
+
+    std::cout<<"Liste des sommets :\n"<<std::endl;//console
 
     for(int i=0; i< vertices.size(); i++)
     {
@@ -81,6 +113,9 @@ void graphe::Prim(int startId, int weightNum)
     int visitedCount = 0;
     int cursor = startId;
     float shortest = 0;
+    int vert1;
+    int vert2;
+
 
     std::cout<<"Shortest way only by using Edge number "<<weightNum+1<<std::endl;
 
@@ -110,14 +145,48 @@ void graphe::Prim(int startId, int weightNum)
             return this->edges[edge1].weights[weightNum] < this->edges[edge2].weights[weightNum];
         });
         cursor = visitedVertices[edges[edgesToCheck[0]].vertex1] ? edges[edgesToCheck[0]].vertex2 : edges[edgesToCheck[0]].vertex1;
-        //std::cout<<edges[edgesToCheck[0]].weights[weightNum];
+
+        vert1=edges[edgesToCheck[0]].vertex1;
+        vert2=edges[edgesToCheck[0]].vertex2;
+
+        svgout->addLine(vertices[vert1].x+800*(weightNum+1),vertices[vert1].y,
+                        vertices[vert2].x+800*(weightNum+1),vertices[vert2].y,Couleur{255,0,0});
+
+            if(vertices[vert1].x==vertices[vert2].x)
+            {
+                svgout->addText(vertices[vert1].x-10+800,(vertices[vert1].y+vertices[vert2].y)/2,edges[edgesToCheck[0]].weights[weightNum],Couleur{0,0,255});
+            }
+            else if(vertices[vert1].y==vertices[vert2].y)
+            {
+                svgout->addText((vertices[vert1].x+vertices[vert2].x)/2+800,vertices[vert1].y-2,edges[edgesToCheck[0]].weights[weightNum],Couleur{0,0,255});
+            }
+            else
+            {
+                svgout->addText((vertices[vert1].x+vertices[vert2].x)/2-4+800,
+                                (vertices[vert1].y+vertices[vert2].y)/2,edges[edgesToCheck[0]].weights[weightNum],Couleur{0,0,255});
+            }
+
 
         if(visitedCount!=vertices.size()-1)
         {
             for(int j=0; j<weightsNum; j++)
             {
-                    OthersEdges[j]+=edges[edgesToCheck[0]].weights[j];
+                OthersEdges[j]+=edges[edgesToCheck[0]].weights[j];
+
             }
+        }
+    }
+
+    for(int i=0; i<vertices.size() ; i++)
+    {
+        svgout->addDisk(vertices[i].x+800, vertices[i].y, 10, Couleur{0,0,0});
+        if(i<10)
+        {
+            svgout->addText(vertices[i].x-5+800, vertices[i].y+5,i, Couleur{255,255,255});
+        }
+        else
+        {
+            svgout->addText(vertices[i].x-8+800, vertices[i].y+5,i, Couleur{255,255,255});
         }
     }
 
@@ -135,16 +204,6 @@ void graphe::Pareto()
 
 void graphe::generateSvg()
 {
-
-    for(int i=0; i<edges.size();i++)
-    {
-        svgout->addLine(vertices[edges[i].vertex1].x,vertices[edges[i].vertex1].y,
-                        vertices[edges[i].vertex2].x,vertices[edges[i].vertex2].y,Couleur{0,0,0});
-    }
-    for(int i=0; i<vertices.size() ;i++)
-    {
-        svgout->addDisk(vertices[i].x, vertices[i].y, 10, Couleur{0,0,0});
-    }
 
 
 }

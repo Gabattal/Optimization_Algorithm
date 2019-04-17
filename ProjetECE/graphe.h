@@ -1,9 +1,7 @@
 #ifndef GRAPHE_H
 #define GRAPHE_H
-#include "sommet.h"
 #include "couleur.h"
 #include "svgfile.h"
-#include "pos.h"
 #include <vector>
 
 
