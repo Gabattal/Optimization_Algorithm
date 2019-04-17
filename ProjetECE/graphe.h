@@ -1,31 +1,47 @@
 #ifndef GRAPHE_H
 #define GRAPHE_H
-#include "sommet.h"
+#include "couleur.h"
+#include "svgfile.h"
 #include <vector>
+
+
+struct Vertex
+{
+    float x;
+    float y;
+};
+
+struct Edge
+{
+    int vertex1;
+    int vertex2;
+    std::vector<float> weights;
+
+    bool checkIfVertex(int vertex) const
+    {
+        return ((vertex == vertex1) || (vertex == vertex2));
+    }
+};
 
 class graphe
 {
     public:
-        graphe(std::string);
-        graphe_weight(std::string);
+        graphe(std::string,std::string, Svgfile *svgout);
+        void afficher_graph();
+        void Prim(int startId, int weightNum);
+        void Pareto();
+        void generateSvg();
+        //graphe_weight(std::string);
         virtual ~graphe();
 
     protected:
 
     private:
-        float m_taille, m_taille2, m_cursor;
-        std::vector<float> tabID;
-        std::vector<float> tabX;
-        std::vector<float> tabY;
-
-        std::vector<float> tabSID;
-        std::vector<float> tabS1;
-        std::vector<float> tabS2;
-
-        std::vector<float> tabArete;
-        std::vector<float> tabPoids1;
-        std::vector<float> tabPoids2;
-
+        Pos unitD;
+        Svgfile *svgout;
+        int weightsNum;
+        std::vector<Vertex> vertices;
+        std::vector<Edge> edges;
 };
 
 #endif // GRAPHE_H
