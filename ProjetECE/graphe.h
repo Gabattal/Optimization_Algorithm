@@ -13,7 +13,7 @@ class graphe
     protected:
 
     private:
-
+// std::string a;
 };
 
 #endif // GRAPHE_H
