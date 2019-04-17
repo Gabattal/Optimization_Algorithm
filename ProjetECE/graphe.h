@@ -3,6 +3,7 @@
 #include "couleur.h"
 #include "svgfile.h"
 #include <vector>
+#include <math.h>
 
 
 struct Vertex
@@ -42,7 +43,6 @@ class graphe
         int weightsNum;
         std::vector<Vertex> vertices;
         std::vector<Edge> edges;
-        int a;
 };
 
 #endif // GRAPHE_H
