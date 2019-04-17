@@ -11,7 +11,16 @@
 int main()
 {
     Svgfile svgout("output.svg", MAP_WIDTH, MAP_HEIGHT);
+    int choix=1;
 
+    while(choix!=3)
+    {
+        std::cout<<"Que voulez-vous faire ?"<<std::endl;
+        std::cout<<"1 - Choisir un graphe"<<std::endl;
+        std::cout<<"2 - Executer un algorithme sur le graphe"<<std::endl;
+        std::cout<<"3 - Quitter"<<std::endl;
+        std::cin>>choix;
+    }
 
    graphe g{"manhattan.txt","manhattan_weights_0.txt",&svgout};
    g.afficher_graph();
