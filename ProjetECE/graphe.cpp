@@ -199,7 +199,39 @@ void graphe::Prim(int startId, int weightNum)
 
 void graphe::Pareto()
 {
+    //compteur binaire
+    std::vector<std::vector <int>> edgesUsed
+                                (pow(2.0,edges.size()),
+                                 std::vector<int>(edges.size()));;
 
+    for(int i = 0; i < pow(2.0,edges.size()); i++)
+    {
+        for(int j = (edges.size()-1); j >= 0; j--)
+        {
+            //std::cout<<edges.size()-j-1<<std::endl;
+            std::cout << ((i & (1 << j)) >> j);
+            if(((i & (1 << j)) >> j)==1)
+            {
+                edgesUsed[i][edges.size()-1-j]=1;
+                std::cout<<"["<<i<<"]["<<edges.size()-1-j<<"]";
+            }
+        }
+        std::cout << std::endl;
+    }
+
+    for(int i = 0; i <edges.size(); ++i)
+    {
+        //std::cout<<"coucou";
+        for(int j=0 ; j<edges.size(); i++)
+        {
+            //if(edgesUsed[i][j]==1)
+            //{
+              //  std::cout<<" "<<edges[j].vertex1<<"-"<<edges[j].vertex2;
+            //}
+            std::cout<<edgesUsed[i][j];
+        }
+        std::cout<<std::endl;
+    }
 }
 
 void graphe::generateSvg()
