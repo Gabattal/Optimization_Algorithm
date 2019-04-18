@@ -198,55 +198,17 @@ void graphe::Prim(int startId, int weightNum)
     std::cout<<std::endl;
 }
 
-void graphe::Pareto(std::string nomFichier, std::string nomFichier2, Svgfile *svgout)
+void graphe::Pareto()
 {
-this->svgout = svgout;
-
-    std::ifstream file{nomFichier};
-    int verticesNum, edgesNum;
-    file>>verticesNum;
-
-    int vertexId, edgeId;
-    float x,y, weight;
-    int vertex1, vertex2;
-
-    for(int i=0; i<verticesNum; i++)
-    {
-        file>>vertexId>>x>>y;
-        vertices.push_back(Vertex{x,y});
-    }
-
-    file>>edgesNum;
-
-    for(int i=0; i<edgesNum; i++)
-    {
-        file>>edgeId>>vertex1>>vertex2;
-        edges.push_back(Edge{vertex1,vertex2});
-    }
-
-    std::ifstream file2{nomFichier2};
-    file2>>edgesNum;
-    file2>>weightsNum;
-
-    for(int i=0; i<edgesNum; i++)
-    {
-        file2>>edgeId;
-
-        for (int j=0; j<weightsNum; j++)
-        {
-            file2>>weight;
-            edges[i].weights.push_back(weight);
-        }
-    }
 
 
         //compteur binaire
 
-    for(int i = 0; i < pow(2.0,edgesNum)-1; ++i)
+    for(int i = 0; i < pow(2.0,edges.size()); ++i)
 {
    // In the following loop we just basically print 'j' bit after bit.
 
-   for(int j = (edgesNum-1); j >= 0; --j)
+   for(int j = (edges.size()-1); j >= 0; --j)
    {
       std::cout << ((i & (1 << j)) >> j);
    }

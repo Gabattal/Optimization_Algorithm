@@ -12,7 +12,7 @@ int main()
 {
     Svgfile svgout("output.svg", MAP_WIDTH, MAP_HEIGHT);
     int choix=1;
-
+/*
     while(choix!=3)
     {
         std::cout<<"Que voulez-vous faire ?"<<std::endl;
@@ -21,13 +21,14 @@ int main()
         std::cout<<"3 - Quitter"<<std::endl;
         std::cin>>choix;
     }
-
-   graphe g{"manhattan.txt","manhattan_weights_0.txt",&svgout};
-   g.afficher_graph();
-   g.Prim(1, 0);
-   std::cout<<std::endl;
+*/
+   graphe g{"broadway.txt","broadway_weights_0.txt",&svgout};
+   //g.afficher_graph();
+   //g.Prim(1, 0);
+   //std::cout<<std::endl;
    //g.Prim(1, 1);
-   g.generateSvg();
+   //g.generateSvg();
+   g.Pareto();
 
    //graphe_weight {"broadway_weight_0.txt"};
     //std::cout<<tableau[0];

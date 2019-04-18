@@ -30,7 +30,7 @@ class graphe
         graphe(std::string,std::string, Svgfile *svgout);
         void afficher_graph();
         void Prim(int startId, int weightNum);
-        void Pareto(std::string,std::string, Svgfile *svgout);
+        void Pareto();
         void generateSvg();
         //graphe_weight(std::string);
         virtual ~graphe();
