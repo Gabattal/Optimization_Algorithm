@@ -153,19 +153,19 @@ void graphe::Prim(int startId, int weightNum)
         svgout->addLine(vertices[vert1].x+800*(weightNum+1),vertices[vert1].y,
                         vertices[vert2].x+800*(weightNum+1),vertices[vert2].y,Couleur{255,0,0});
 
-            if(vertices[vert1].x==vertices[vert2].x)
-            {
-                svgout->addText(vertices[vert1].x-10+800,(vertices[vert1].y+vertices[vert2].y)/2,edges[edgesToCheck[0]].weights[weightNum],Couleur{0,0,255});
-            }
-            else if(vertices[vert1].y==vertices[vert2].y)
-            {
-                svgout->addText((vertices[vert1].x+vertices[vert2].x)/2+800,vertices[vert1].y-2,edges[edgesToCheck[0]].weights[weightNum],Couleur{0,0,255});
-            }
-            else
-            {
-                svgout->addText((vertices[vert1].x+vertices[vert2].x)/2-4+800,
-                                (vertices[vert1].y+vertices[vert2].y)/2,edges[edgesToCheck[0]].weights[weightNum],Couleur{0,0,255});
-            }
+        if(vertices[vert1].x==vertices[vert2].x)
+        {
+            svgout->addText(vertices[vert1].x-10+800,(vertices[vert1].y+vertices[vert2].y)/2,edges[edgesToCheck[0]].weights[weightNum],Couleur{0,0,255});
+        }
+        else if(vertices[vert1].y==vertices[vert2].y)
+        {
+            svgout->addText((vertices[vert1].x+vertices[vert2].x)/2+800,vertices[vert1].y-2,edges[edgesToCheck[0]].weights[weightNum],Couleur{0,0,255});
+        }
+        else
+        {
+            svgout->addText((vertices[vert1].x+vertices[vert2].x)/2-4+800,
+                            (vertices[vert1].y+vertices[vert2].y)/2,edges[edgesToCheck[0]].weights[weightNum],Couleur{0,0,255});
+        }
 
 
         if(visitedCount!=vertices.size()-1)
@@ -198,29 +198,45 @@ void graphe::Prim(int startId, int weightNum)
     std::cout<<std::endl;
 }
 
+
+
 void graphe::Pareto()
 {
 
 
-        //compteur binaire
+    //compteur binaire
+    std::vector<std::vector <int>> edgesUsed
+                                (pow(2.0,edges.size()),
+                                 std::vector<int>(edges.size()));;
 
-    for(int i = 0; i < pow(2.0,edges.size()); ++i)
-{
-   // In the following loop we just basically print 'j' bit after bit.
+    for(int i = 0; i < pow(2.0,edges.size()); i++)
+    {
+        for(int j = (edges.size()-1); j >= 0; j--)
+        {
+            //std::cout<<edges.size()-j-1<<std::endl;
+            std::cout << ((i & (1 << j)) >> j);
+            if(((i & (1 << j)) >> j)==1)
+            {
+                edgesUsed[i][edges.size()-1-j]=1;
+                std::cout<<"["<<i<<"]["<<edges.size()-1-j<<"]";
+            }
+        }
+        std::cout << std::endl;
+    }
 
-   for(int j = (edges.size()-1); j >= 0; --j)
-   {
-      std::cout << ((i & (1 << j)) >> j);
-   }
-
-   std::cout << std::endl;
-}
+    for(int i = 0; i <edges.size(); ++i)
+    {
+        //std::cout<<"coucou";
+        for(int j=0 ; j<edges.size(); i++)
+        {
+            if(edgesUsed[i][j]==1)
+            {
+                std::cout<<" "<<edges[j].vertex1<<"-"<<edges[j].vertex2;
+            }
+        }
+        std::cout<<std::endl;
+    }
 //utiliser vecteurs booléens
-
-
-
-
-
 }
 
 void graphe::generateSvg()
