@@ -152,19 +152,19 @@ void graphe::Prim(int startId, int weightNum)
         svgout->addLine(vertices[vert1].x+800*(weightNum+1),vertices[vert1].y,
                         vertices[vert2].x+800*(weightNum+1),vertices[vert2].y,Couleur{255,0,0});
 
-            if(vertices[vert1].x==vertices[vert2].x)
-            {
-                svgout->addText(vertices[vert1].x-10+800,(vertices[vert1].y+vertices[vert2].y)/2,edges[edgesToCheck[0]].weights[weightNum],Couleur{0,0,255});
-            }
-            else if(vertices[vert1].y==vertices[vert2].y)
-            {
-                svgout->addText((vertices[vert1].x+vertices[vert2].x)/2+800,vertices[vert1].y-2,edges[edgesToCheck[0]].weights[weightNum],Couleur{0,0,255});
-            }
-            else
-            {
-                svgout->addText((vertices[vert1].x+vertices[vert2].x)/2-4+800,
-                                (vertices[vert1].y+vertices[vert2].y)/2,edges[edgesToCheck[0]].weights[weightNum],Couleur{0,0,255});
-            }
+        if(vertices[vert1].x==vertices[vert2].x)
+        {
+            svgout->addText(vertices[vert1].x-10+800,(vertices[vert1].y+vertices[vert2].y)/2,edges[edgesToCheck[0]].weights[weightNum],Couleur{0,0,255});
+        }
+        else if(vertices[vert1].y==vertices[vert2].y)
+        {
+            svgout->addText((vertices[vert1].x+vertices[vert2].x)/2+800,vertices[vert1].y-2,edges[edgesToCheck[0]].weights[weightNum],Couleur{0,0,255});
+        }
+        else
+        {
+            svgout->addText((vertices[vert1].x+vertices[vert2].x)/2-4+800,
+                            (vertices[vert1].y+vertices[vert2].y)/2,edges[edgesToCheck[0]].weights[weightNum],Couleur{0,0,255});
+        }
 
 
         if(visitedCount!=vertices.size()-1)
@@ -202,7 +202,21 @@ void graphe::Pareto()
     //compteur binaire
     std::vector<std::vector <int>> edgesUsed
                                 (pow(2.0,edges.size()),
-                                 std::vector<int>(edges.size()));;
+                                 std::vector<int>(edges.size()));
+
+    std::vector<std::vector <int>> verticesUsed
+                                (pow(2.0,edges.size()),
+                                 std::vector<int>(edges.size()*2,-1));
+
+
+    std::vector<int> numberOfEdges (pow(2.0,edges.size()),0);
+
+    std::vector<std::vector<float>> weightWay (pow(2.0,edges.size()),
+                                 std::vector<float>(weightsNum,0));
+
+    int numberOfVertices;
+    //int nbVertices
+
 
     for(int i = 0; i < pow(2.0,edges.size()); i++)
     {
@@ -213,22 +227,63 @@ void graphe::Pareto()
             if(((i & (1 << j)) >> j)==1)
             {
                 edgesUsed[i][edges.size()-1-j]=1;
-                std::cout<<"["<<i<<"]["<<edges.size()-1-j<<"]";
             }
         }
         std::cout << std::endl;
     }
 
-    for(int i = 0; i <edges.size(); ++i)
+
+    for(int i = 0; i <pow(2.0,edges.size()); i++)
     {
         //std::cout<<"coucou";
-        for(int j=0 ; j<edges.size(); i++)
+        for(int j=0 ; j<edges.size(); j++)
         {
-            //if(edgesUsed[i][j]==1)
-            //{
-              //  std::cout<<" "<<edges[j].vertex1<<"-"<<edges[j].vertex2;
-            //}
-            std::cout<<edgesUsed[i][j];
+            if(edgesUsed[i][j]==1)
+            {
+                std::cout<<" "<<edges[j].vertex1<<"-"<<edges[j].vertex2;
+                verticesUsed[i][j]=edges[j].vertex1;
+                verticesUsed[i][edges.size()+j]=edges[j].vertex2;
+                //std::cout<<"/"<<edges[j].weights[0]<<"-";
+                numberOfEdges[i]++;
+                //std::cout<<"|"<<numberOfEdges[i];
+            }
+
+        }
+        if(numberOfEdges[i]==vertices.size()-1)
+        {
+            std::sort(verticesUsed[i].begin(), verticesUsed[i].end());
+            numberOfVertices = std::unique(verticesUsed[i].begin(), verticesUsed[i].end()) - verticesUsed[i].begin()-1;
+
+            if(numberOfVertices==vertices.size())
+            {
+                for(int j=0; j<edges.size(); j++)
+                {
+                    if(edgesUsed[i][j]==1)
+                    {
+                        for(int k=0 ; k<weightsNum ; k++)
+                        {
+                        //std::cout<<" "<<edges[j].weights[0];
+                        weightWay[i][k]+=edges[j].weights[k];
+                        }
+                    }
+
+
+                }
+                for (int k=0 ; k<weightsNum ; k++)
+                    {
+                         std::cout<<"  ["<<weightWay[i][k]<<"] ";
+                    }
+                /*
+                for(int k=0; k<weightsNum; k++)
+                {
+                    for(int j=0; j<edges.size(); j++)
+                    {
+                        //weightWay[i][k]+=edges[j].weights[k];
+                        std::cout<<edgesUsed[i][j].weights[k];
+                    }
+                    //std::cout<<weightWay[i][k]<<"-";
+                }*/
+            }
         }
         std::cout<<std::endl;
     }
