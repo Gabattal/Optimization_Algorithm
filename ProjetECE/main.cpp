@@ -37,19 +37,20 @@ int main()
         }
         if (choix==2)
         {
-
-        }
-
-    }while(choix!=3);
-
-    graphe g{nom+".txt",nom+"_weights_"+poids+".txt",&svgout};
+            graphe g{nom+".txt",nom+"_weights_"+poids+".txt",&svgout};
             g.afficher_graph();
             g.Prim(1, 0);
             g.generateSvg();
             choix=0;
-   std::cout<<std::endl;*/
+        }
+
+    }while(choix!=3);
+
+*/
+   //std::cout<<std::endl;
    //g.Prim(1, 1);
-    graphe g{"broadway.txt","broadway_weights_0.txt",&svgout};
+    std::string city = "manhattan";
+    graphe g{city+".txt",city+"_weights_0.txt",&svgout};
     g.Pareto();
    //graphe_weight {"broadway_weight_0.txt"};
     //std::cout<<tableau[0];

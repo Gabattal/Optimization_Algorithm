@@ -3,6 +3,7 @@
 #include <fstream>
 #include <vector>
 #include <algorithm>
+#include <map>
 
 graphe::graphe(std::string nomFichier, std::string nomFichier2, Svgfile *svgout)
 {
@@ -197,101 +198,163 @@ void graphe::Prim(int startId, int weightNum)
     std::cout<<std::endl;
 }
 
+unsigned int graphe::countSetBits(unsigned int n)
+{
+    unsigned int count = 0;
+    while (n)
+    {
+        count += n & 1;
+        n >>= 1;
+    }
+    return count;
+}
+
+std::vector<int> graphe::getAllNBitsNumbers(int N, int k)
+{
+    std::string str;
+
+    int j = N;
+    while (j--)
+    {
+        str.push_back(j>=k?'0':'1');
+    }
+
+    std::vector<int> result;
+
+    do
+    {
+        result.push_back(std::stoi(str, nullptr, 2));
+    }
+    while (next_permutation(str.begin(), str.end()));
+
+    return result;
+}
+
 void graphe::Pareto()
 {
     //compteur binaire
-    std::vector<std::vector <int>> edgesUsed
-                                (pow(2.0,edges.size()),
-                                 std::vector<int>(edges.size()));
 
-    std::vector<std::vector <int>> verticesUsed
-                                (pow(2.0,edges.size()),
-                                 std::vector<int>(edges.size()*2,-1));
-
-
-    std::vector<int> numberOfEdges (pow(2.0,edges.size()),0);
-
-    std::vector<std::vector<float>> weightWay (pow(2.0,edges.size()),
-                                 std::vector<float>(weightsNum,0));
+    std::map<std::pair<float, float>, bool> drawedDisk;
 
     int numberOfVertices;
     //int nbVertices
+    svgout->addLine(400,700,400,200,Couleur{0,0,0});
+    svgout->addLine(400,700,900,700,Couleur{0,0,0});
 
-
-    for(int i = 0; i < pow(2.0,edges.size()); i++)
+    for(int i=0; i<11; i++)
     {
-        for(int j = (edges.size()-1); j >= 0; j--)
-        {
-            //std::cout<<edges.size()-j-1<<std::endl;
-            std::cout << ((i & (1 << j)) >> j);
-            if(((i & (1 << j)) >> j)==1)
-            {
-                edgesUsed[i][edges.size()-1-j]=1;
-            }
-        }
-        std::cout << std::endl;
+        svgout->addLine(400+50*i,700,400+50*i,200,Couleur{0,0,0,0.3f});
+        svgout->addLine(400,700-50*i,900,700-50*i,Couleur{0,0,0,0.3f});
     }
 
+    //svgout->addGrid(50,0,Couleur{0,0,0});
+
+    //std::vector<int> generatedNumbers = getAllNBitsNumbers(edges.size()+1,vertices.size()-1);
+
+    int lastPurcentage = 0;
 
     for(int i = 0; i <pow(2.0,edges.size()); i++)
     {
+        if (countSetBits(i) != vertices.size()-1)
+        {
+            continue;
+        }
+
+        int newPurcentage = (10.0f * i / pow(2.0,edges.size()));
+        if (newPurcentage > lastPurcentage)
+        {
+            std::cout<< newPurcentage*10 << "%" << std::endl;
+            lastPurcentage = newPurcentage;
+        }
+
+        std::vector<bool> edgesUsed(edges.size(), false);
+        std::vector<int> verticesUsed(edges.size()*2,-1);
+        std::vector<float> weightWay(weightsNum,0);
+        int numberOfEdges = vertices.size()-1;
+
+        for(int j = (edges.size()-1); j >= 0; j--)
+        {
+            //std::cout<<edges.size()-j-1<<std::endl;
+            //std::cout << ((i & (1 << j)) >> j);
+            if(((i & (1 << j)) >> j)==1)
+            {
+                edgesUsed[edges.size()-1-j]=true;
+            }
+        }
+
         //std::cout<<"coucou";
         for(int j=0 ; j<edges.size(); j++)
         {
-            if(edgesUsed[i][j]==1)
+            if(edgesUsed[j])
             {
-                std::cout<<" "<<edges[j].vertex1<<"-"<<edges[j].vertex2;
-                verticesUsed[i][j]=edges[j].vertex1;
-                verticesUsed[i][edges.size()+j]=edges[j].vertex2;
+                //std::cout<<" "<<edges[j].vertex1<<"-"<<edges[j].vertex2;
+                verticesUsed[j]=edges[j].vertex1;
+                verticesUsed[edges.size()+j]=edges[j].vertex2;
                 //std::cout<<"/"<<edges[j].weights[0]<<"-";
-                numberOfEdges[i]++;
                 //std::cout<<"|"<<numberOfEdges[i];
             }
 
         }
-        if(numberOfEdges[i]==vertices.size()-1)
+        std::sort(verticesUsed.begin(), verticesUsed.end());
+        numberOfVertices = std::unique(verticesUsed.begin(), verticesUsed.end()) - verticesUsed.begin()-1;
+        //numberOfVertices = vertices.size()-1;
+
+        if(numberOfVertices==vertices.size())
         {
-            std::sort(verticesUsed[i].begin(), verticesUsed[i].end());
-            numberOfVertices = std::unique(verticesUsed[i].begin(), verticesUsed[i].end()) - verticesUsed[i].begin()-1;
-
-            if(numberOfVertices==vertices.size())
+            for(int j=0; j<edges.size(); j++)
             {
-                for(int j=0; j<edges.size(); j++)
+                if(edgesUsed[j])
                 {
-                    if(edgesUsed[i][j]==1)
+                    for(int k=0 ; k<weightsNum ; k++)
                     {
-                        for(int k=0 ; k<weightsNum ; k++)
-                        {
                         //std::cout<<" "<<edges[j].weights[0];
-                        weightWay[i][k]+=edges[j].weights[k];
-                        }
+                        weightWay[k]+=edges[j].weights[k];
                     }
-
-
                 }
-                for (int k=0 ; k<weightsNum ; k++)
-                    {
-                         std::cout<<"  ["<<weightWay[i][k]<<"] ";
-                    }
-                /*
-                for(int k=0; k<weightsNum; k++)
+
+
+            }
+            drawedDisk[std::pair<float, float>(weightWay[0],weightWay[1])] = true;
+
+            /*
+            for (int k=0 ; k<weightsNum ; k++)
                 {
-                    for(int j=0; j<edges.size(); j++)
-                    {
-                        //weightWay[i][k]+=edges[j].weights[k];
-                        std::cout<<edgesUsed[i][j].weights[k];
-                    }
-                    //std::cout<<weightWay[i][k]<<"-";
+                     std::cout<<"  ["<<weightWay[k]<<"] ";
                 }*/
+        }
+
+        //std::cout<<std::endl;
+    }
+
+    for ( const auto &point : drawedDisk )
+    {
+        bool isExtremum = true;
+        for ( const auto &point2 : drawedDisk )
+        {
+            if (point == point2)
+            {
+                continue;
+            }
+            if ((point.first.first >= point2.first.first) && (point.first.second >= point2.first.second))
+            {
+                isExtremum = false;
+                break;
             }
         }
-        std::cout<<std::endl;
+        if (isExtremum)
+        {
+            svgout->addDisk(point.first.first*5+400,-point.first.second*5+700,2,Couleur{0,255,0});
+        }
+        else
+        {
+            svgout->addDisk(point.first.first*5+400,-point.first.second*5+700,2,Couleur{255,0,0});
+        }
     }
 }
 
+
 void graphe::generateSvg()
 {
-
 
 }
 

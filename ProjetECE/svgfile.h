@@ -49,6 +49,7 @@ class Svgfile
         void addDisk(double x, double y, double r, std::string color=defcol);
         void addLine(double x1, double y1, double x2, double y2, std::string color=defcol);
         void addText(double x, double y, double number, std::string color=defcol);
+        void addGrid(double span, bool numbering, std::string color);
 
 
         static std::string makeRGB(int r, int g, int b, float a);

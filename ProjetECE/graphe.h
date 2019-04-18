@@ -29,6 +29,8 @@ class graphe
         graphe(std::string,std::string, Svgfile *svgout);
         void afficher_graph();
         void Prim(int startId, int weightNum);
+        unsigned int countSetBits(unsigned int n);
+        std::vector<int> getAllNBitsNumbers(int N, int k);
         void Pareto();
         void generateSvg();
         //graphe_weight(std::string);

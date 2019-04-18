@@ -93,6 +93,25 @@ void Svgfile::addLine(double x1, double y1, double x2, double y2, std::string co
             << "/>\n";
 }
 
+void Svgfile::addGrid(double span, bool numbering, std::string color)
+{
+    double y=0;
+    while (y<=m_height/2)
+    {
+        addLine(100, y, 100+m_width/2, y, color);
+        addText(5+100, y-5, y, color);
+        y+=span;
+    }
+
+    double x=0;
+    while (x<=m_width/2)
+    {
+        addLine(x, 100, x, m_height/2+100, color);
+        addText(x+5+100, 15, x, color);
+        x+=span;
+    }
+}
+
 std::string Svgfile::makeRGB(int r, int g, int b, float a)
 {
     std::ostringstream oss;
