@@ -1,23 +1,54 @@
 # depslib dependency file v1.0
-1555339698 source:d:\program files\piscine\projetece\sommet.cpp
+1555340811 source:d:\program files\piscine\projetece\sommet.cpp
 	"sommet.h"
 	<iostream>
 
-1555339698 d:\program files\piscine\projetece\sommet.h
+1555340811 d:\program files\piscine\projetece\sommet.h
 	<iostream>
 
-1555338883 source:d:\program files\piscine\projetece\main.cpp
+1555630912 source:d:\program files\piscine\projetece\main.cpp
 	<iostream>
+	<vector>
+	<cstdlib>
 	"graphe.h"
+	"svgfile.h"
+	"couleur.h"
+
+1555625438 d:\program files\piscine\projetece\graphe.h
+	"couleur.h"
+	"svgfile.h"
 	<vector>
 
-1555337508 d:\program files\piscine\projetece\graphe.h
-	"sommet.h"
-	<vector>
-
-1555339615 source:d:\program files\piscine\projetece\graphe.cpp
+1555630868 source:d:\program files\piscine\projetece\graphe.cpp
 	"graphe.h"
 	<iostream>
 	<fstream>
 	<vector>
+	<algorithm>
+	<map>
+
+1555514185 d:\program files\piscine\projetece\couleur.h
+	<string>
+	<cstdint>
+
+1555616637 d:\program files\piscine\projetece\svgfile.h
+	<string>
+	<fstream>
+	<set>
+	<vector>
+	"pos.h"
+
+1555514185 d:\program files\piscine\projetece\pos.h
+
+1555446354 source:d:\program files\piscine\projetece\pos.cpp
+
+1555618209 source:d:\program files\piscine\projetece\svgfile.cpp
+	"svgfile.h"
+	<iostream>
+	<sstream>
+
+1555514539 source:d:\program files\piscine\projetece\couleur.cpp
+	"couleur.h"
+	"svgfile.h"
+	<iostream>
 
