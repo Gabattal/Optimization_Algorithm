@@ -238,18 +238,15 @@ void graphe::Pareto()
 
     int numberOfVertices;
     //int nbVertices
-    svgout->addLine(400,700,400,200,Couleur{0,0,0});
-    svgout->addLine(400,700,900,700,Couleur{0,0,0});
+    svgout->addLine(400,700,400,100,Couleur{0,0,0});
+    svgout->addLine(400,700,1000,700,Couleur{0,0,0});
 
-    for(int i=0; i<11; i++)
+    for(int i=0; i<13; i++)
     {
-        svgout->addLine(400+50*i,700,400+50*i,200,Couleur{0,0,0,0.3f});
-        svgout->addLine(400,700-50*i,900,700-50*i,Couleur{0,0,0,0.3f});
+        svgout->addLine(400+50*i,700,400+50*i,100,Couleur{0,0,0,0.3f});
+        svgout->addLine(400,700-50*i,1000,700-50*i,Couleur{0,0,0,0.3f});
     }
 
-    //svgout->addGrid(50,0,Couleur{0,0,0});
-
-    //std::vector<int> generatedNumbers = getAllNBitsNumbers(edges.size()+1,vertices.size()-1);
 
     int lastPurcentage = 0;
 
@@ -274,8 +271,7 @@ void graphe::Pareto()
 
         for(int j = (edges.size()-1); j >= 0; j--)
         {
-            //std::cout<<edges.size()-j-1<<std::endl;
-            //std::cout << ((i & (1 << j)) >> j);
+
             if(((i & (1 << j)) >> j)==1)
             {
                 edgesUsed[edges.size()-1-j]=true;
@@ -297,7 +293,6 @@ void graphe::Pareto()
         }
         std::sort(verticesUsed.begin(), verticesUsed.end());
         numberOfVertices = std::unique(verticesUsed.begin(), verticesUsed.end()) - verticesUsed.begin()-1;
-        //numberOfVertices = vertices.size()-1;
 
         if(numberOfVertices==vertices.size())
         {
@@ -316,14 +311,8 @@ void graphe::Pareto()
             }
             drawedDisk[std::pair<float, float>(weightWay[0],weightWay[1])] = true;
 
-            /*
-            for (int k=0 ; k<weightsNum ; k++)
-                {
-                     std::cout<<"  ["<<weightWay[k]<<"] ";
-                }*/
         }
 
-        //std::cout<<std::endl;
     }
 
     for ( const auto &point : drawedDisk )
