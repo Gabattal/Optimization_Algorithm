@@ -1,0 +1,13 @@
+.vs/*
+bin/*
+Debug/*
+obj/*
+Release/*
+x64/*
+
+*.sln
+*.vcxproj
+*.vcxproj.filters
+
+*.layout
+*.layout.depend
