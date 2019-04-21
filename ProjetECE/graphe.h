@@ -1,4 +1,4 @@
-#ifndef GRAPHE_H
+﻿#ifndef GRAPHE_H
 #define GRAPHE_H
 #include "couleur.h"
 #include "svgfile.h"
@@ -32,6 +32,7 @@ public:
 	unsigned int countSetBits(unsigned int n);
 	std::vector<int> getAllNBitsNumbers(int N, int k);
 	void Pareto();
+	void Dijkstra();
 	void generateSvg();
 	//graphe_weight(std::string);
 	virtual ~graphe();

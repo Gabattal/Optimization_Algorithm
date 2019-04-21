@@ -218,9 +218,14 @@ std::vector<int> graphe::getAllNBitsNumbers(int N, int k)
 	std::vector<bool> b;
 
 	int j = N;
+
+	//for (int i = 0; i < N - k; i++)
+	//{
 	while (j--)
 	{
+
 		b.push_back(j >= k ? false : true);
+
 	}
 
 	std::vector<int> result;
@@ -231,18 +236,29 @@ std::vector<int> graphe::getAllNBitsNumbers(int N, int k)
 		//result.push_back(std::stoi(str, nullptr, 2));
 	} while (next_permutation(b.begin(), b.end()));
 
+
 	return result;
+	//}
 }
 
+int minDistance(int dist[], bool sptSet[])
+{
+	// Initialize min value 
+	int min = INT_MAX, min_index;
+
+	for (int v = 0; v < 5; v++)
+		if (sptSet[v] == false && dist[v] <= min)
+			min = dist[v], min_index = v;
+
+	return min_index;
+}
 void graphe::Pareto()
 {
-	//compteur binaire
 
 	std::map<std::pair<float, float>, std::pair<bool, std::vector<std::vector<bool>>>> drawedDisk;
-	//std::map<int, bool> betterEdges;
 
 	int nb = 0;
-	//int nbVertices
+
 	svgout->addLine(50, 350, 50, 50, Couleur{ 0,0,0 });
 	svgout->addLine(50, 350, 350, 350, Couleur{ 0,0,0 });
 
@@ -251,9 +267,6 @@ void graphe::Pareto()
 		svgout->addLine(50 + 25 * i, 350, 50 + 25 * i, 50, Couleur{ 0,0,0,0.3f });
 		svgout->addLine(50, 350 - 25 * i, 350, 350 - 25 * i, Couleur{ 0,0,0,0.3f });
 	}
-
-
-	//int lastPurcentage = 0;
 
 	std::vector<int> h = getAllNBitsNumbers(edges.size(), vertices.size() - 1);
 
@@ -265,13 +278,6 @@ void graphe::Pareto()
 
 	for (auto const &i : h)
 	{
-		/*
-		int newPurcentage = (5.0f * i / pow(2.0, edges.size()));
-		if (newPurcentage > lastPurcentage)
-		{
-			std::cout << newPurcentage * 5 << "%" << std::endl;
-			lastPurcentage = newPurcentage;
-		}*/
 
 		edgesUsed.clear();
 		edgesUsed.resize(edges.size(), false);
@@ -298,25 +304,11 @@ void graphe::Pareto()
 			n >>= 1;
 		}
 
-		/*for (int j = (edges.size() - 1); j >= 0; j--)
-		{
-			if (((i & (1 << j)) >> j) == 1)
-			{
-				edgesUsed[edges.size() - 1 - j] = true;
-
-				for (int k = 0; k < weightsNum; k++)
-				{
-					weightWay[k] += edges[edges.size() - 1 - j].weights[k];
-				}
-				//std::cout<<((i & (1 << j)) >> j);
-			}
-		}*/
-		//std::cout<<std::endl;
-
 		if (drawedDisk.count(std::pair<float, float>(weightWay[0], weightWay[1])))
 		{
 			if (drawedDisk[std::pair<float, float>(weightWay[0], weightWay[1])].first)
 			{
+				drawedDisk[std::pair<float, float>(weightWay[0], weightWay[1])].second.push_back(std::vector<bool>());
 				continue;
 			}
 		}
@@ -377,17 +369,15 @@ void graphe::Pareto()
 	}
 
 	int countExtremum = 0;
+	const int numPerLine = 8;
 
 	for (const auto &point : drawedDisk)
 	{
-		//nb++;
-		//std::vector<int> edgesUsed(edges.size(), 0);
 
 		if (!point.second.first)
 		{
-			//std::cout << point.first.first << "," << point.first.second;
-			//std::cout << std::endl;
-			svgout->addDisk(point.first.first * 2.5f + 50, -point.first.second * 2.5f + 350, 2, Couleur{ 0,255,0 });
+
+			svgout->addDisk(point.first.first * 2.5f + 50, -point.first.second * 2.5f + 350, log(point.second.second.size() + 1) * 2, Couleur{ 0,255,0 });
 
 			for (const auto &extremum : point.second.second)
 			{
@@ -395,32 +385,201 @@ void graphe::Pareto()
 				{
 					if (extremum[i])
 					{
-						//std::cout << edges[i].vertex1 << ";" << edges[i].vertex2 << std::endl;
-						svgout->addLine(25 + 40 * (countExtremum % 5) * 4 + vertices[edges[i].vertex1].x*0.3f, 400 + 160 * (countExtremum / 5) + vertices[edges[i].vertex1].y*0.3f,
-							25 + 40 * (countExtremum % 5) * 4 + vertices[edges[i].vertex2].x*0.3f, 400 + 160 * (countExtremum / 5) + vertices[edges[i].vertex2].y*0.3f, Couleur{ 0,0,0 });
+						svgout->addLine(25 + 20 * (countExtremum % numPerLine) * 4 + vertices[edges[i].vertex1].x*0.15f, 400 + 80 * (countExtremum / numPerLine) + vertices[edges[i].vertex1].y*0.15f,
+							25 + 20 * (countExtremum % numPerLine) * 4 + vertices[edges[i].vertex2].x*0.15f, 400 + 80 * (countExtremum / numPerLine) + vertices[edges[i].vertex2].y*0.15f, Couleur{ 0,0,0 });
 					}
 				}
 
 				for (int i = 0; i < vertices.size(); i++)
 				{
-					svgout->addDisk(25 + 40 * (countExtremum % 5) * 4 + vertices[i].x*0.3f, 400 + 160 * (countExtremum / 5) + vertices[i].y*0.3f, 3, Couleur{ 0,0,0 });
-					//svgout->addDisk(25 + 40 * countExtremum + vertices[i].x*0.3f, 600 + vertices[i].y*0.3f, 8, Couleur{ 0,0,0 });
-					//svgout->addText(25 + 40 * countExtremum + vertices[i].x*0.3f - ((i > 9) ? 8 : 5), 600 + vertices[i].y*0.3f + 5, i, Couleur{ 255,255,255 });
+					svgout->addDisk(25 + 20 * (countExtremum % numPerLine) * 4 + vertices[i].x*0.15f, 400 + 80 * (countExtremum / numPerLine) + vertices[i].y*0.15f, 3, Couleur{ 0,0,0 });
 				}
 
-				svgout->addText(25 + 40 * (countExtremum % 5) * 4, 400 + 160 * (countExtremum / 5), "( " + std::to_string((int)point.first.first) + " , " + std::to_string((int)point.first.second) + " )", Couleur{ 50,50,50 });
+				svgout->addText(25 + 20 * (countExtremum % numPerLine) * 4, 400 + 80 * (countExtremum / numPerLine), "( " + std::to_string((int)point.first.first) + " , " + std::to_string((int)point.first.second) + " )", Couleur{ 50,50,50 });
 
 				countExtremum++;
-				//std::cout << std::endl;
 			}
 		}
 		else
 		{
-			svgout->addDisk(point.first.first * 2.5f + 50, -point.first.second * 2.5f + 350, 1, Couleur{ 255,0,0 });
+			svgout->addDisk(point.first.first * 2.5f + 50, -point.first.second * 2.5f + 350, log(point.second.second.size() + 1) / 4.0f, Couleur{ 255,0,0 });
 		}
 	}
 }
 
+auto comp = [](const std::pair<int, int> &a, const std::pair<int, int> &b) {return a.second > b.second; };
+
+void::graphe::Dijkstra()
+{
+	std::map<std::pair<float, float>, std::pair<bool, std::vector<std::vector<bool>>>> drawedDisk;
+
+	int nb = 0;
+
+	svgout->addLine(50, 350, 50, 50, Couleur{ 0,0,0 });
+	svgout->addLine(50, 350, 350, 350, Couleur{ 0,0,0 });
+
+	for (int i = 0; i < 13; i++)
+	{
+		svgout->addLine(50 + 25 * i, 350, 50 + 25 * i, 50, Couleur{ 0,0,0,0.3f });
+		svgout->addLine(50, 350 - 25 * i, 350, 350 - 25 * i, Couleur{ 0,0,0,0.3f });
+	}
+
+	for (int k = 0; k < edges.size() - vertices.size() + 2; k++)
+	{
+		std::vector<int> h = getAllNBitsNumbers(edges.size(), vertices.size() - 1 + k);
+
+		std::vector<bool> edgesUsed(edges.size(), false);
+		std::vector<bool> verticesUsed(vertices.size(), false);
+		std::vector<float> weightWay(weightsNum, 0);
+
+		std::queue<int> pointsToCheck;
+
+		for (auto const &i : h)
+		{
+
+			edgesUsed.clear();
+			edgesUsed.resize(edges.size(), false);
+
+			verticesUsed.clear();
+			verticesUsed.resize(vertices.size(), false);
+
+			weightWay.clear();
+			weightWay.resize(weightsNum, 0.0f);
+
+			int n = i;
+			std::vector<std::vector<std::pair<int, int>>> G(vertices.size());
+			for (int j = 0; j < edges.size(); j++)
+			{
+				if (n & 1)
+				{
+					edgesUsed[edges.size() - 1 - j] = n & 1;
+					weightWay[0] += edges[edges.size() - 1 - j].weights[0];
+
+					G[edges[j].vertex1].push_back(std::make_pair(edges[j].vertex2, edges[j].weights[1]));
+					G[edges[j].vertex2].push_back(std::make_pair(edges[j].vertex1, edges[j].weights[1]));
+
+				}
+				n >>= 1;
+			}
+
+			pointsToCheck = std::queue<int>();
+			pointsToCheck.push(0);
+
+			int numberOfVertices = 0;
+
+
+
+			if (numberOfVertices == vertices.size())
+			{
+				std::pair<float, float> key(weightWay[0], weightWay[1]);
+				drawedDisk[key].second.push_back(edgesUsed);
+				for (int StartNode = 0; StartNode < vertices.size(); StartNode++)
+				{
+
+					std::vector<int> Distances(vertices.size(), std::numeric_limits<int>::max());
+
+					Distances[StartNode] = 0;
+
+
+					std::vector<int> Parents(vertices.size(), -1);
+
+					std::priority_queue<std::pair<int, int>, std::vector<std::pair<int, int>>, decltype(comp)> Q(comp);
+					Q.push(std::make_pair(StartNode, 0));
+
+					while (!Q.empty()) {
+						int v = Q.top().first;
+						int w = Q.top().second;
+						Q.pop();
+
+						if (w <= Distances[v]) {
+
+							for (const auto& l : G[v]) {
+								auto v2 = l.first;
+								auto w2 = l.second;
+
+								if (Distances[v] + w2 < Distances[v2]) {
+									Distances[v2] = Distances[v] + w2;
+									Parents[v2] = v;
+									Q.push(std::make_pair(v2, Distances[v2]));
+								}
+							}
+						}
+					}
+
+
+					for (auto l = 0; l != vertices.size(); ++l) {
+						weightWay[1] += Distances[l];
+					}
+
+				}
+
+				std::cout << weightWay[1] << std::endl;
+				if (drawedDisk.count(std::pair<float, float>(weightWay[0], weightWay[1])))
+				{
+					if (drawedDisk[std::pair<float, float>(weightWay[0], weightWay[1])].first)
+					{
+						drawedDisk[std::pair<float, float>(weightWay[0], weightWay[1])].second.push_back(std::vector<bool>());
+						continue;
+					}
+				}
+				weightWay[1] = 20;
+
+				for (const auto &point2 : drawedDisk)
+				{
+					if (key == point2.first)
+					{
+						continue;
+					}
+					if (((key.first > point2.first.first) && (key.second >= point2.first.second)) || ((key.first >= point2.first.first) && (key.second > point2.first.second)))
+					{
+						drawedDisk[key].first = true;
+					}
+					if (((key.first < point2.first.first) && (key.second <= point2.first.second)) || ((key.first <= point2.first.first) && (key.second < point2.first.second)))
+					{
+						drawedDisk[point2.first].first = true;
+					}
+				}
+			}
+		}
+	}
+
+
+	int countExtremum = 0;
+	const int numPerLine = 8;
+
+	for (const auto &point : drawedDisk)
+	{
+		if (!point.second.first)
+		{
+			svgout->addDisk(point.first.first * 2.5f + 50, -point.first.second * 2.5f + 350, log(point.second.second.size() + 1) * 2, Couleur{ 0,255,0 });
+
+			for (const auto &extremum : point.second.second)
+			{
+				for (int i = 0; i < extremum.size(); i++)
+				{
+					if (extremum[i])
+					{
+						svgout->addLine(25 + 20 * (countExtremum % numPerLine) * 4 + vertices[edges[i].vertex1].x*0.15f, 400 + 80 * (countExtremum / numPerLine) + vertices[edges[i].vertex1].y*0.15f,
+							25 + 20 * (countExtremum % numPerLine) * 4 + vertices[edges[i].vertex2].x*0.15f, 400 + 80 * (countExtremum / numPerLine) + vertices[edges[i].vertex2].y*0.15f, Couleur{ 0,0,0 });
+					}
+				}
+
+				for (int i = 0; i < vertices.size(); i++)
+				{
+					svgout->addDisk(25 + 20 * (countExtremum % numPerLine) * 4 + vertices[i].x*0.15f, 400 + 80 * (countExtremum / numPerLine) + vertices[i].y*0.15f, 3, Couleur{ 0,0,0 });
+				}
+
+				svgout->addText(25 + 20 * (countExtremum % numPerLine) * 4, 400 + 80 * (countExtremum / numPerLine), "( " + std::to_string((int)point.first.first) + " , " + std::to_string((int)point.first.second) + " )", Couleur{ 50,50,50 });
+
+				countExtremum++;
+			}
+		}
+		else
+		{
+			svgout->addDisk(point.first.first * 2.5f + 50, -point.first.second * 2.5f + 350, log(point.second.second.size() + 1) / 4.0f, Couleur{ 255,0,0 });
+		}
+	}
+}
 
 void graphe::generateSvg()
 {

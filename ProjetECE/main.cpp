@@ -49,9 +49,11 @@ int main()
 	*/
 	//std::cout<<std::endl;
 	//g.Prim(1, 1);
-	std::string city = "manhattan";
+	std::string city = "broadway";
 	graphe g{ city + ".txt",city + "_weights_0.txt",&svgout };
-	g.Pareto();
+	//g.Pareto();
+	g.Dijkstra();
+	getchar();
 	//graphe_weight {"broadway_weight_0.txt"};
 	 //std::cout<<tableau[0];
 	//getchar();

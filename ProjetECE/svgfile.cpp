@@ -17,8 +17,8 @@ Svgfile::Svgfile(std::string _filename, int _width, int _height) :
 	m_filename{ _filename }, m_width{ _width }, m_height{ _height }
 {
 
-	std::cout << "Opening SVG output file : "
-		<< m_filename << std::endl;
+	//std::cout << "Opening SVG output file : "
+	//	<< m_filename << std::endl;
 
 	if (s_openfiles.count(m_filename))
 		throw std::runtime_error("File " + m_filename + " already open !");
@@ -32,7 +32,7 @@ Svgfile::Svgfile(std::string _filename, int _width, int _height) :
 		throw std::runtime_error("Could not open file " + m_filename);
 	}
 
-	std::cout << "OK" << std::endl;
+	//std::cout << "OK" << std::endl;
 
 	// Writing the header into the SVG file
 	m_ostrm << svgHeader;
@@ -88,6 +88,17 @@ void Svgfile::addText(double x, double y, std::string str, std::string color)
 		<< attrib("fill", color)
 		<< ">" << str << "</text>\n";
 }
+/*
+void Svgfile::addText(double x, double y, std::string str, std::string color, int size)
+{
+	/// <text x="180" y="60">Un texte</text>
+	m_ostrm << "<text "
+		<< attrib("x", x)
+		<< attrib("y", y)
+		<< attrib("fill", color)
+		<< attrib("font-size", std::to_string(size) + "px")
+		<< ">" << str << "</text>\n";
+}*/
 
 
 
