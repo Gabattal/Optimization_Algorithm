@@ -31,9 +31,9 @@ public:
 	void Prim(int startId, int weightNum);
 	unsigned int countSetBits(unsigned int n);
 	std::vector<int> getAllNBitsNumbers(int N, int k);
+	int weightMin(int StartNode, int sizeVertices, std::vector<std::vector<std::pair<int, int>>> G);
 	void Pareto();
 	void Dijkstra();
-	void generateSvg();
 	//graphe_weight(std::string);
 	virtual ~graphe();
 
