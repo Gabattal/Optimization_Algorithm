@@ -1,6 +1,6 @@
-# Algorithme d'optimisation / 21/04/2019
+# Optimization algorithm
 
-Algorithm made with C++ which use Djirkstra, Pareto and Prim to find a better solution, taking into account two parameters.
+Algorithm made with C++ which use Djirkstra, Pareto and Prim to find a better solution, taking into account two parameters (04/2019).
 
 ## Technologies used:
 * C++
