@@ -1,14 +1,14 @@
 # Optimization algorithm
 
-Algorithm made with C++ which use Djirkstra, Pareto and Prim to find a better solution, taking into account two parameters (04/2019).
+Algorithm made to find the best solution (04/2019).
 
 ## Technologies used:
 * C++
 * SVG
 
 ## Features:
-* Determine a better solution using one parameter (Prim)
-* Determine a better solution using two parameters (Pareto & Djirkstra)
+* Determine the best solution using one parameter (Prim)
+* Determine one of the best solution using two parameters (Pareto & Djirkstra)
 
 ## Screenshot:
 
